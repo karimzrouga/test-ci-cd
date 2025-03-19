@@ -11,14 +11,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up JDK 11
-      uses: actions/setup-java@v1
-      with:
-        java-version: '11'
-    - name: Build with Maven
-      run: mvn -B package --file pom.xml
-    - name: Submit dependency snapshot
-      uses: advanced-security/maven-dependency-submission-action@v1
-      env:
-        GITHUB_TOKEN: ${{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 }}
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '11'
+
+      - name: Build with Maven
+        run: mvn -B package --file pom.xml
+
+      - name: Submit dependency snapshot
+        uses: advanced-security/maven-dependency-submission-action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
